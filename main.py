@@ -1,7 +1,6 @@
-# This is a sample Python script.
-from playsound import playsound
-from audioplayer import AudioPlayer
+
 import Musica
+from pygame import mixer
 
 
 
@@ -13,9 +12,9 @@ import Musica
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    muzic = Musica.Musica("Glycerine", "Bush", "MachineHead")
-    muzic.teste_musicas()
-
+    mixer.init()
+    mixer.music.load("venv\musicas\glycerine.mp3")
+    mixer.music.play()
 
 
 
