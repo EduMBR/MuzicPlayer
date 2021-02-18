@@ -1,7 +1,13 @@
 from tkinter import Button, Label, Grid, mainloop, Tk
 from pygame import mixer
 import os
+import random
 
+class playlist():
+
+    def __init__(self, lista_musicas):
+        self.lista_musicas = lista_musicas
+        self.mixer = mixer
 
 class Musica:
 
@@ -11,6 +17,12 @@ class Musica:
         self.album = album
         self.mixer = mixer
 
+    def montar_lista_musicas(self, caminho):
+        playlist = []
+        diretorio = os.listdir(caminho)
+        for musicas in diretorio:
+            playlist.append(os.path.join(caminho, musicas))
+        return playlist
 
 
     def resumir(self):
@@ -18,7 +30,8 @@ class Musica:
 
     def reproduzir(self):
         self.mixer.init()
-        self.mixer.music.load("musicas\glycerine.mp3")
+        lista = self.montar_lista_musicas("musicas")
+        self.mixer.music.load(lista[random.randrange(len(lista))])
         self.mixer.music.play()
 
     def pausar(self):
@@ -30,6 +43,13 @@ class Musica:
     def fechar(self):
         self.mixer.quit()
 
+    #Falta implementar
+    def proxima_musica(self):
+        pass
+    #Falta implementar
+    def musica_anterior(self):
+        pass
+
     def aumentar_volume(self):
         self.__alterar_volume(0.1)
 
@@ -40,7 +60,6 @@ class Musica:
         if(self.mixer.music.get_volume() + valor < 0):
             self.mixer.music.set_volume(0)
         self.mixer.music.set_volume(self.mixer.music.get_volume() + valor)
-
 
     def iniciar_interface_grafica(self):
         painel = Tk()
@@ -83,3 +102,4 @@ class Musica:
 
 teste = Musica("Glycerine", "Bush", "MachineHead")
 teste.iniciar_interface_grafica()
+#teste.escolher_musica("musicas")
